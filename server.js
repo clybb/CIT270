@@ -10,6 +10,20 @@ app.use(express.static("public"));
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 
+app.use(async function (req, res, next){
+    var cookie = req.cookies.stedicookie;
+    if(cookie === undefined && !req.url.includes("login") && !req.url.includes("html") && req.url !== "/" && !req.url.includes('css') && !req.url.includes('js') && !req.url.includes('ico') && !req.url.includes('png')) {
+        // no: set a new cookie
+        res.status(401);
+        res.send("no cookie");
+    }
+    else{
+        // yes, cookie was already present
+        res.status(200);
+        next();
+    }
+});
+
 app.post('/rapidsteptest', async (req, res)=>{
     const steps = req.body;
     await redisClient.zAdd('Steps',[{score:0,value:JSON.stringify(steps)}]);
