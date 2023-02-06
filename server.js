@@ -12,7 +12,7 @@ app.use(cookieParser());
 
 app.post('/rapidsteptest', async (req, res)=>{
     const steps = req.body;
-    await redisClient.zAdd("Steps", steps, 0);
+    await redisClient.zAdd('Steps',[{score:0,value:JSON.stringify(steps)}]);
     console.log("Steps", steps);
     res.send('saved');
 });
