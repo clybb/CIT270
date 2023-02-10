@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = 443;
 const bodyParser = require ("body-parser");
 const Redis = require("redis");
 const redisClient = Redis.createClient({url:"redis://127.0.0.1:6379"});
@@ -9,6 +9,8 @@ app.use(bodyParser.json()); // activates body-parser to look for incoming data
 app.use(express.static("public"));
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
+const https = require('https');
+const fs = require('fs');
 
 app.use(async function (req, res, next){
     var cookie = req.cookies.stedicookie;
@@ -55,8 +57,18 @@ app.post('/login', async (req, res) =>{
         res.status(401);
         res.send("Inncorrect password for "+loginUser);
     }
-})
-app.listen(port, ()=> {
-    redisClient.connect()
-    console.log("listening");
+});
+// app.listen(port, ()=> {
+//     redisClient.connect()
+//     console.log("listening");
+// });
+
+https.createServer(
+    {key: fs.readFileSync('./server.key'),
+    cert: fs.readFileSync('./server.cert'),
+    ca: fs.readFileSync('./chain.pem')
+},
+app).listen(port, ()=>{
+    redisClient.connect();
+    console.log('Listening on port: '+port);
 });
