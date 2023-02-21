@@ -63,8 +63,8 @@ app.post('/login', async (req, res) =>{
 //     console.log("listening");
 // });
 
-https.createServer(
-    {key: fs.readFileSync('./server.key'),
+https.createServer({
+    key: fs.readFileSync('./server.key'),
     cert: fs.readFileSync('./server.cert'),
     ca: fs.readFileSync('./chain.pem')
 },
