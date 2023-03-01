@@ -65,7 +65,7 @@ app.post('/login', async (req, res) =>{
 
 https.createServer({
     key: fs.readFileSync('/etc/letsencrypt/live/caleblybbert.cit270.com/privkey.pem'),
-    cert: fs.readFileSync('etc/letsencrypt/live/caleblybbert.cit270.com/cert.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/caleblybbert.cit270.com/cert.pem'),
     ca: fs.readFileSync('/etc/letsencrypt/live/caleblybbert.cit270.com/fullchain.pem')
 },
 app).listen(port, ()=>{
