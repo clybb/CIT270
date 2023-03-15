@@ -14,11 +14,11 @@ spec:
         app: cit270calebservice
     spec:
       containers:
-        - name: cit270calebservice
-        image: mythic-producer-379820/caleb-api
+      - name: cit270calebservice
+        image: gcr.io/mythic-producer-379820/caleb-api
         volumeMounts:
-          - name: ssl
-            mountPath: "/etc/letsencrypt/live/SSL"
+        - name: ssl
+          mountPath: "/etc/letsencrypt/live/caleblybbert.cit270.com/"
         command: ["npm"]
         args: ["run", "start"]
         resources:
@@ -30,6 +30,6 @@ spec:
             memory: 600Mi
         imagePullPolicy: Always
       volumes:
-        - name: ssl
+      - name: ssl
         secret:
           secretName: calebcerts
