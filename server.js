@@ -3,7 +3,7 @@ const app = express();
 const port = 443;
 const bodyParser = require ("body-parser");
 const Redis = require("redis");
-const redisClient = Redis.createClient({url:"redis://127.0.0.1:6379"});
+const redisClient = Redis.createClient({url:"redis://defualt:9rgCuJFd8FS9jbpN@redis-stedi-caleb:6379"});
 const {v4: uuidv4} = require('uuid');
 app.use(bodyParser.json()); // activates body-parser to look for incoming data
 app.use(express.static("public"));
