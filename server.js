@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 443;
+const port = 3000;
 const bodyParser = require ("body-parser");
 const Redis = require("redis");
 const redisClient = Redis.createClient({url:"redis://default:9rgCuJFd8FS9jbpN@redis-stedi-caleb:6379"});
@@ -58,17 +58,17 @@ app.post('/login', async (req, res) =>{
         res.send("Inncorrect password for "+loginUser);
     }
 });
-// app.listen(port, ()=> {
-//     redisClient.connect()
-//     console.log("listening");
-// });
-
-https.createServer({
-    key: fs.readFileSync('/etc/letsencrypt/live/caleblybbert.cit270.com/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/caleblybbert.cit270.com/cert.pem'),
-    ca: fs.readFileSync('/etc/letsencrypt/live/caleblybbert.cit270.com/fullchain.pem')
-},
-app).listen(port, ()=>{
-    redisClient.connect();
-    console.log('Listening on port: '+port);
+app.listen(port, ()=> {
+    redisClient.connect()
+    console.log("listening");
 });
+
+// https.createServer({
+//     key: fs.readFileSync('/etc/letsencrypt/live/caleblybbert.cit270.com/privkey.pem'),
+//     cert: fs.readFileSync('/etc/letsencrypt/live/caleblybbert.cit270.com/cert.pem'),
+//     ca: fs.readFileSync('/etc/letsencrypt/live/caleblybbert.cit270.com/fullchain.pem')
+// },
+// app).listen(port, ()=>{
+//     redisClient.connect();
+//     console.log('Listening on port: '+port);
+// });

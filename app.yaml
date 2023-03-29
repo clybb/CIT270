@@ -33,15 +33,54 @@ spec:
       - name: ssl
         secret:
           secretName: calebcerts
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: cit270calebservice-loadbalancer
+# spec:
+#   selector:
+#     app: cit270calebservice
+#   type: LoadBalancer
+#   ports:
+#   - port: 443
+#     targetPort: 443
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: cit270calebservice-loadbalancer
+  name: stedi-caleb-nodeport
 spec:
   selector:
     app: cit270calebservice
-  type: LoadBalancer
+  type: NodePort
   ports:
-  - port: 443
-    targetPort: 443
+  - port: 80
+    targetPort: 3000
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: stedi-caleb-certificate
+spec:
+  domains:
+    - caleblybbert.cit270.com
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: stedi-caleb-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: cit270caleb
+    networking.gke.io/managed-certificates: stedi-caleb-certificate
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: stedi-caleb-nodeport
+            port:
+              number: 80
